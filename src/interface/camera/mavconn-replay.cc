@@ -384,15 +384,16 @@ int main(int argc, char* argv[])
 			if (( (images_left.empty() || sync_image_left_it != images_left.end()) && (images_right.empty() ||  sync_image_right_it != images_right.end()) && !(images_right.empty() && images_left.empty())) &&
 				(sync_image_left_it->first >= startTimestamp || sync_image_right_it->first >= startTimestamp))
 			{
-				if (found_correct_timestamp == false)
-				{
-					printf("Found starting timestamp, start replaying now from here...\n");
-					found_correct_timestamp = true;
-				}
-
 				uint64_t timestamp = sync_image_left_it->first;
 				if (sync_image_left_it->first < time)
 				{
+
+					if (found_correct_timestamp == false)
+					{
+						printf("Found starting timestamp, start replaying now from here...\n");
+						found_correct_timestamp = true;
+					}
+
 					// Image found
 					if (verbose) printf("[%llu] loading left image %s\n", (long long unsigned) camid_left, sync_image_left_it->second.c_str());
 					image_left = cv::imread(sync_image_left_it->second.c_str(), -1);
